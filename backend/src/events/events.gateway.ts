@@ -7,7 +7,7 @@ import {
 } from "@nestjs/websockets";
 
 import { Server, Socket } from "socket.io";
-import { RoomState } from "./types";
+import type { RoomState, WSResponse } from "./types";
 import { generateCode } from "@/shared/generateCode";
 import { createSessionMiddleware } from "@/session.config";
 
@@ -53,7 +53,7 @@ export class EventsGateway {
 	}
 
 	@SubscribeMessage("createRoom")
-	handleCreateRoom(@ConnectedSocket() client: Socket) {
+	handleCreateRoom(@ConnectedSocket() client: Socket): WSResponse<{roomId: string}> {
 		const roomId = generateCode();
 		client.join(roomId);
 
@@ -70,7 +70,7 @@ export class EventsGateway {
 	}
 
 	@SubscribeMessage("joinRoom")
-	handleJoinRoom(@MessageBody() payload: { roomId: string }, @ConnectedSocket() client: Socket) {
+	handleJoinRoom(@MessageBody() payload: { roomId: string }, @ConnectedSocket() client: Socket): WSResponse<{users: number, slide: number}> {
 		const { roomId } = payload;
 		const room = this.rooms.get(roomId);
 
@@ -82,7 +82,7 @@ export class EventsGateway {
 		}
 
 		if (room.socketIds.has(client.id)) {
-			return { ok: false, error: "User already in room" };
+			return { ok: true, users: room.socketIds.size, slide: room.slide };
 		}
 
 		client.join(roomId);
@@ -95,6 +95,6 @@ export class EventsGateway {
 			users: room.socketIds.size,
 		});
 
-		return { ok: true, users: room.socketIds.size };
+		return { ok: true, users: room.socketIds.size, slide: room.slide };
 	}
 }
