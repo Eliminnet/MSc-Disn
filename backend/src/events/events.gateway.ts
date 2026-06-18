@@ -7,11 +7,9 @@ import {
 } from "@nestjs/websockets";
 
 import { Server, Socket } from "socket.io";
-
-type RoomPayload = {
-	id: string;
-	user: string;
-};
+import { RoomState } from "./types";
+import { generateCode } from "@/shared/generateCode";
+import { createSessionMiddleware } from "@/session.config";
 
 @WebSocketGateway({
 	cors: {
@@ -22,42 +20,81 @@ export class EventsGateway {
 	@WebSocketServer()
 	server!: Server;
 
-	private users = new Map<string, Partial<RoomPayload>>();
+	private rooms: Map<string, RoomState> = new Map();
 
-	handleConnect(client: Socket) {
+	afterInit(server: Server) {
+		const sessionMiddleware = createSessionMiddleware();
+
+		server.engine.use((req, res, next) => {
+			sessionMiddleware(req as any, res as any, next as any);
+		});
+	}
+
+	handleConnection(client: Socket) {
 		console.log(`Client connected: ${client.id}`);
-
-		this.users.set(client.id, {});
 	}
 
 	handleDisconnect(client: Socket) {
 		console.log(`Client disconnected: ${client.id}`);
 
-		const data = this.users.get(client.id);
+		for (const [roomId, room] of this.rooms.entries()) {
+			room.socketIds.delete(client.id);
 
-		if (data?.id) {
-			this.server.to(data.id).emit("userLeft", {
-				user: data.user,
+			if (room.hostId === client.id || room.socketIds.size === 0) {
+				this.server.in(roomId).socketsLeave(roomId);
+				this.rooms.delete(roomId);
+				continue;
+			}
+
+			this.server.to(roomId).emit("roomUsers", {
+				users: room.socketIds.size,
 			});
 		}
+	}
 
-		this.users.delete(client.id);
+	@SubscribeMessage("createRoom")
+	handleCreateRoom(@ConnectedSocket() client: Socket) {
+		const roomId = generateCode();
+		client.join(roomId);
+
+		this.rooms.set(roomId, {
+			hostId: client.id,
+			slide: 0,
+			socketIds: new Set([client.id]),
+		});
+
+		console.log(`Created room ${roomId}`);
+		console.log(this.rooms.get(roomId));
+
+		return { ok: true, roomId };
 	}
 
 	@SubscribeMessage("joinRoom")
-	handleJoinRoom(@MessageBody() payload: RoomPayload, @ConnectedSocket() client: Socket) {
-		const { id, user } = payload;
+	handleJoinRoom(@MessageBody() payload: { roomId: string }, @ConnectedSocket() client: Socket) {
+		const { roomId } = payload;
+		const room = this.rooms.get(roomId);
 
-		client.join(id);
+		console.log(roomId);
+		console.log(this.rooms.keys());
 
-		this.users.set(client.id, { id, user });
-		client.to(id).emit("userJoined", {
-			user,
+		if (!room) {
+			return { ok: false, error: "Room does not exist" };
+		}
+
+		if (room.socketIds.has(client.id)) {
+			return { ok: false, error: "User already in room" };
+		}
+
+		client.join(roomId);
+		room.socketIds.add(client.id);
+
+		console.log(`User ${client.id} joined room ${roomId}`);
+		console.log(this.rooms.get(roomId));
+
+		this.server.to(roomId).emit("roomUsers", {
+			users: room.socketIds.size,
 		});
 
-		return {
-			event: "joinedRoom",
-			data: { id },
-		};
+		return { ok: true, users: room.socketIds.size };
 	}
 }
