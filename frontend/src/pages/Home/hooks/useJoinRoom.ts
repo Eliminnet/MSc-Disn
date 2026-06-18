@@ -16,7 +16,7 @@ export function useJoinRoom() {
 			const res = await handleJoin(roomId);
 
 			if (res.ok) {
-				navigate(`room/${roomId}`, { state: { users: res.users } });
+				navigate(`room/${roomId}`, { state: res });
 			} else {
 				setError(res.error ?? "Failed to join");
 			}
