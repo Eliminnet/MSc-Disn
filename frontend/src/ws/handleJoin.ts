@@ -1,7 +1,7 @@
 import { socket } from "./socket";
 import type { WSResponse } from "./types";
 
-type Response = WSResponse<{ users: number }>;
+type Response = WSResponse<{ users: number, slide: number }>;
 
 export function handleJoin(roomId: string): Promise<Response> {
 	return new Promise((resolve) => {
