@@ -1,0 +1,45 @@
+.login-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: max(20%, 20rem);
+}
+
+.login-header {
+    display: grid;
+    grid-template: 4rem / 4rem auto;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-form {
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+.login-wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    border: hsl(var(--primary-1)) 3px solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.login-input {
+    height: 2rem;
+    background-color: hsl(var(--secondary-2));
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.login-button {
+    align-self: center;
+    height: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
