@@ -1,14 +1,14 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { RoomsModule } from "./modules/room/rooms.module";
 import { EventsGateway } from "./events/events.gateway";
+import { AuthModule } from "./modules/auth/auth.module";
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
 		}),
-		RoomsModule,
+		AuthModule,
 	],
 	controllers: [],
 	providers: [EventsGateway],
