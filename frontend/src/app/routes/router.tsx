@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 
 import { AppLayout } from "../layout/AppLayout";
 import { NotFound } from "@/pages/NotFound";
@@ -8,11 +8,13 @@ import { Login } from "@/pages/Login";
 
 import { roomLoader } from "./loaders/roomLoader";
 import { authLoader } from "./loaders/authLoader";
+import { loginLoader } from "./loaders/loginLoader";
 
 export const router = createBrowserRouter([
 	{
 		path: "/login",
 		element: <Login />,
+		loader: loginLoader,
 	},
 	{
 		element: <AppLayout />,
@@ -24,9 +26,20 @@ export const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: "/room/:roomId",
-				element: <Room />,
-				loader: roomLoader,
+				path: "/room",
+				children: [
+					{
+						index: true,
+						loader: () => {
+							throw redirect("/");
+						},
+					},
+					{
+						path: ":roomId",
+						element: <Room />,
+						loader: roomLoader,
+					},
+				],
 			},
 		],
 	},
