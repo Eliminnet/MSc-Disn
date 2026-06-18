@@ -1,0 +1,44 @@
+:root {
+    /* Primary Colours */
+    --primary-hue: 257;
+    --primary-saturation: 70%;
+    --primary-lightness: 80%;
+
+    --primary-1: var(--primary-hue) var(--primary-saturation) var(--primary-lightness);
+    --primary-2: var(--primary-hue) calc(var(--primary-saturation) + 2%) calc(var(--primary-lightness) - 5%);
+    --primary-3: var(--primary-hue) calc(var(--primary-saturation) + 4%) calc(var(--primary-lightness) - 10%);
+    --primary-4: var(--primary-hue) calc(var(--primary-saturation) + 6%) calc(var(--primary-lightness) - 15%);
+    --primary-5: var(--primary-hue) calc(var(--primary-saturation) + 8%) calc(var(--primary-lightness) - 20%);
+
+    --primary-bg: var(--primary-5);
+    --primary-text: 0 100% 100%;
+
+    /* Secondary Colours */
+    --secondary-hue: 0;
+    --secondary-saturation: 0%;
+    --secondary-lightness: 100%;
+
+    --secondary-1: var(--secondary-hue) var(--secondary-saturation) var(--secondary-lightness);
+    --secondary-2: var(--secondary-hue) var(--secondary-saturation) calc(var(--secondary-lightness) - 5%);
+
+    --secondary-bg: var(--secondary-1);
+    --secondary-text: var(--primary-hue) calc(var(--primary-saturation) - 30%) calc(var(--primary-lightness) - 50%);
+
+    /* Tertiary Colours */
+    --tertiary-hue: calc(var(--primary-hue) - 180);
+    --tertiary-saturation: 60%;
+    --tertiary-lightness: 60%;
+
+    --tertiary-1: var(--tertiary-hue) var(--tertiary-saturation) var(--tertiary-lightness);
+    --tertiary-2: var(--tertiary-hue) calc(var(--tertiary-saturation) + 4%) calc(var(--tertiary-lightness) - 10%);
+
+    --tertiary-bg: var(--tertiary-1);
+    --tertiary-text: var(--secondary-text);
+}
+
+/* Todo remake the variables for dark/light theme*/
+@media (prefers-color-scheme: dark) {
+	:root {
+
+	}
+}

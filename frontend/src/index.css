@@ -1,25 +1,42 @@
 :root {
-	--primary-hsl: 180, 29%, 78%;
-	--secondary-hsl: 182, 16%, 55%;
-	--tertiary-hsl: 190, 13%, 36%;
-	--hover-hsl: 182, 21%, 67%;
-	
-	--background-hsl: 76, 57%, 91%;
-	--accent-hsl: 4, 99%, 66%;
-
-	--text-dark-hsl: 240, 33%, 9%;
-	--text-light-hsl: 255, 100%, 100%;
-
-	background-color: hsl(var(--tertiary-hsl));
-	color: hsl(var(--text-light-hsl));
+	background-color: hsl(var(--primary-bg));
+	color: hsl(var(--primary-text));
 
 	font-family: "Inter",sans-serif;
 	letter-spacing: 0.03em;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-	}
+.primary {
+	background-color: hsl(var(--primary-bg));
+	color: hsl(var(--primary-text))
+}
+.primary:is(button) {
+	transition: background-color 0.2s ease;
+}
+.primary:is(button):hover {
+	background-color: hsl(var(--primary-3));
+}
+
+.secondary {
+	background-color: hsl(var(--secondary-bg));
+	color: hsl(var(--secondary-text))
+}
+
+.tertiary {
+	background-color: hsl(var(--tertiary-bg));
+	color: hsl(var(--tertiary-text))
+}
+.tertiary:is(button) {
+	transition: background-color 0.2s ease;
+}
+.tertiary:is(button):hover {
+	background-color: hsl(var(--tertiary-2));
+}
+
+.tooltip {
+	color: hsl(0, 0%, 60%);
+	font-weight: 500;
+	font-size: 0.8rem;
 }
 
 body {
