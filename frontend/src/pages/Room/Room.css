@@ -1,0 +1,25 @@
+.room-code {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    font-size: max(7dvw, 5rem);
+    margin-bottom: 3rem;
+}
+.room-code::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 1.5rem);
+    background-color: hsl(var(--accent-hsl));
+    width: 80%;
+    height: 4px;
+}
+
+.room-users {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
