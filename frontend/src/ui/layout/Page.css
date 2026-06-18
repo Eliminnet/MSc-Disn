@@ -1,0 +1,19 @@
+.page-layout {
+    display: grid;
+    position: relative;
+    height: 100dvh;
+    width: 100vw;
+    grid-template-areas: "nav nav" "content sidebar";
+    grid-template-rows: 5rem auto;
+    grid-template-columns: auto 18rem;
+}
+
+.page-content {
+    position: relative;
+    grid-area: content;
+    background-color: hsl(var(--tertiary-hsl));
+    margin: 0 5rem;
+    padding: 1rem;
+    border-left: hsl(var(--accent-hsl)) 3px solid;
+    border-right: hsl(var(--accent-hsl)) 3px solid;
+}
