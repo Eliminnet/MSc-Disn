@@ -54,7 +54,10 @@ export class EventsGateway {
 
 	@SubscribeMessage("createRoom")
 	handleCreateRoom(@ConnectedSocket() client: Socket): WSResponse<{roomId: string}> {
-		const roomId = generateCode();
+		let roomId = generateCode();
+		while (this.rooms.has(roomId)) {
+			roomId = generateCode()
+		}
 		client.join(roomId);
 
 		this.rooms.set(roomId, {
