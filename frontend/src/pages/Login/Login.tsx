@@ -2,6 +2,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import "./Login.css";
+
 const Login = () => {
 	const { signIn } = useAuth();
 	const [username, setUsername] = useState<string>("");
@@ -17,31 +19,45 @@ const Login = () => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="username">Username:</label>
-					<input
-						id="username"
-						type="text"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
-					/>
+			<div className="login-content">
+				<div className="login-header">
+					<img src="/favicon.svg" />
+					<h1 style={{ fontSize: "1.5rem" }}>MSc Project</h1>
 				</div>
-
-				<div>
-					<label htmlFor="password">Password:</label>
-					<input
-						id="password"
-						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
-					/>
-				</div>
-
-				<button type="submit">Log in</button>
-			</form>
+				<form
+					className="login-form secondary"
+					onSubmit={handleSubmit}
+				>
+					<div className="login-wrapper">
+						<input
+							className="login-input"
+							type="text"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							placeholder="Username"
+							required
+						/>
+						<input
+							className="login-input"
+							type="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							placeholder="Password"
+							required
+						/>
+						<button
+							className="login-button tertiary"
+							type="submit"
+						>
+							Log in
+						</button>
+						<p className="tooltip">
+							*Your username is private to all users (including lecturers) for
+							anonymity
+						</p>
+					</div>
+				</form>
+			</div>
 		</>
 	);
 };
