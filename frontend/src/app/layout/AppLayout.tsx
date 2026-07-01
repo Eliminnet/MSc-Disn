@@ -1,5 +1,5 @@
 import { Page } from "@/ui";
-import Navbar from "@/ui/core/Navbar";
+import { Navbar } from "@/ui/core";
 import { Outlet } from "react-router-dom";
 
 export function AppLayout() {
