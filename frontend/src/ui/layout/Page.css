@@ -3,15 +3,15 @@
     position: relative;
     height: 100dvh;
     width: 100vw;
-    grid-template-areas: "nav nav" "content sidebar";
+    grid-template-areas: "nav nav" "content content";
     grid-template-rows: 5rem auto;
     grid-template-columns: auto 18rem;
+    background-image: linear-gradient(to right, hsl(var(--primary-gradient-1)), hsl(var(--primary-gradient-2)));
 }
 
 .page-content {
     position: relative;
     grid-area: content;
-    background-color: hsl(var(--tertiary-hsl));
     margin: 0 5rem;
     padding: 1rem;
     border-left: hsl(var(--accent-hsl)) 3px solid;
