@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 
 import { AppLayout } from "../layout/AppLayout";
 import { NotFound } from "@/pages/NotFound";
+import { Join } from "@/pages/Join";
 import { Home } from "@/pages/Home";
 import { Room } from "@/pages/Room";
 import { Login } from "@/pages/Login";
@@ -12,32 +13,40 @@ import { loginLoader } from "./loaders/loginLoader";
 
 export const router = createBrowserRouter([
 	{
-		path: "/login",
-		element: <Login />,
-		loader: loginLoader,
-	},
-	{
 		element: <AppLayout />,
 		errorElement: <NotFound />,
-		loader: authLoader,
 		children: [
 			{
 				index: true,
 				element: <Home />,
 			},
 			{
-				path: "/room",
+				path: "/login",
+				element: <Login />,
+				loader: loginLoader,
+			},
+			{
+				loader: authLoader,
 				children: [
 					{
-						index: true,
-						loader: () => {
-							throw redirect("/");
-						},
+						path: "/join",
+						element: <Join />,
 					},
 					{
-						path: ":roomId",
-						element: <Room />,
-						loader: roomLoader,
+						path: "/room",
+						children: [
+							{
+								index: true,
+								loader: () => {
+									throw redirect("/");
+								},
+							},
+							{
+								path: ":roomId",
+								element: <Room />,
+								loader: roomLoader,
+							},
+						],
 					},
 				],
 			},
