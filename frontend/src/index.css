@@ -10,27 +10,32 @@
 	background-color: hsl(var(--primary-bg));
 	color: hsl(var(--primary-text))
 }
-.primary:is(button) {
+button.primary {
+	background-color: hsl(var(--tertiary-1));
 	transition: background-color 0.2s ease;
 }
-.primary:is(button):hover {
-	background-color: hsl(var(--primary-3));
+button.primary:hover {
+	background-color: hsl(var(--tertiary-2));
 }
 
 .secondary {
-	background-color: hsl(var(--secondary-bg));
+	background-color: hsl(var(--secondary-1));
 	color: hsl(var(--secondary-text))
+}
+button.secondary {
+	background-color: transparent;
+	border: 4px solid hsl(var(--tertiary-1));
+	color: hsl(var(--tertiary-1));
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+button.secondary:hover {
+	color: hsl(var(--secondary-1));
+	background-color: hsl(var(--tertiary-1));
 }
 
 .tertiary {
 	background-color: hsl(var(--tertiary-bg));
 	color: hsl(var(--tertiary-text))
-}
-.tertiary:is(button) {
-	transition: background-color 0.2s ease;
-}
-.tertiary:is(button):hover {
-	background-color: hsl(var(--tertiary-2));
 }
 
 .tooltip {
@@ -66,5 +71,7 @@ input {
 
 button, a {
 	cursor: pointer;
+	text-transform: uppercase;
+	font-weight: 600;
 }
 
