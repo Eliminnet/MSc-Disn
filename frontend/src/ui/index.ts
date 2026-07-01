@@ -1,2 +1,2 @@
 export { Page } from "./layout"
-export { Navbar } from "./core"
+export { Navbar } from "./core/Navbar"
