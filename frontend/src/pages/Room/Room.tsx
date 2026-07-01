@@ -3,6 +3,7 @@ import { useRoomUsers } from "./hooks/useRoomUsers";
 import { useRoomSlide } from "./hooks/useRoomSlide";
 
 import "./Room.css";
+import Host from "./components/Host";
 
 const Room = () => {
 	const location = useLocation();
@@ -15,12 +16,10 @@ const Room = () => {
 
 	if (host) {
 		return (
-			<>
-				<h2>Room: {roomId}</h2>
-				<p className="room-users">
-					{users - 1} student{users - 1 > 1 ? "s" : ""} waiting to start
-				</p>
-			</>
+			<Host
+				roomId={roomId}
+				users={users}
+			/>
 		);
 	}
 
